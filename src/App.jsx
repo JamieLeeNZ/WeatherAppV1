@@ -4,25 +4,50 @@ import React, { useState } from 'react';
 function App() {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+  const [timeData, setTimeData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchWeatherData = async () => {
-    setIsLoading(true);
-    setError(null);
-    setWeatherData(null);
-
     try {
-      const response = await fetch(
+      const weatherResponse = await fetch(
         `${import.meta.env.VITE_APP_API_URL}/current.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}`
       );
 
-      if (!response.ok) {
+      if (!weatherResponse.ok) {
         throw new Error('Failed to fetch weather data');
       }
 
-      const data = await response.json();
-      setWeatherData(data);
+      const weatherData = await weatherResponse.json();
+      setWeatherData(weatherData);
+    } catch (error) {
+      setError(error.message);
+    } 
+  };
+
+  const fetchTimeData = async () => {
+    try {
+      const timeResponse = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/timezone.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}`
+      );
+  
+      if (!timeResponse.ok) {
+        throw new Error('Failed to fetch time data');
+      }
+  
+      const timeData = await timeResponse.json();
+      setTimeData(timeData);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await Promise.all([fetchWeatherData(), fetchTimeData()]);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -36,7 +61,7 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetchWeatherData();
+    fetchData();
   };
 
   return (
@@ -53,10 +78,11 @@ function App() {
       </form>
       {isLoading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      {weatherData && (
+      {weatherData && timeData && (
         <div>
           <h2>Weather Information</h2>
           <p>Location: {weatherData.location.name}</p>
+          <p>Local time: {timeData.location.localtime}</p>
           <p>Temperature: {weatherData.current.temp_c}°C</p>
           <img src={weatherData.current.condition.icon} alt="Weather Icon" />
           <p>Condition: {weatherData.current.condition.text}</p>
