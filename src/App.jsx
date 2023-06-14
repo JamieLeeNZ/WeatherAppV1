@@ -3,16 +3,30 @@ import { useState } from 'react';
 function App() {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchWeatherData = async () => {
+    setIsLoading(true);
+    setError(null);
     setWeatherData(null);
 
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/current.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}`
-    );
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/current.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}`
+      );
 
-    const data = await response.json();
-    setWeatherData(data);
+      if (!response.ok) {
+        throw new Error('Failed to fetch weather data');
+      }
+
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (event) => {
