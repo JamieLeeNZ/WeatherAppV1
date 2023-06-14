@@ -24,8 +24,8 @@ function App() {
 
 
   return (
-    <div className="App">
-      <h1>Weather App</h1>
+    <div className="flex flex-col items-center justify-center h-screen py-20">
+      <h1 className="text-5xl mb-5 font-serif font-family-Georgia">Weather App</h1>
       <GetInput
         location={location}
         handleInputChange={handleInputChange}
