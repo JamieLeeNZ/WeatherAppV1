@@ -1,10 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [location, setLocation] = useState('');
+  const [weatherData, setWeatherData] = useState(null);
+
+  const fetchWeatherData = async () => {
+    setWeatherData(null);
+
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/current.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}`
+    );
+
+    const data = await response.json();
+    setWeatherData(data);
+  };
+
+  const handleInputChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchWeatherData();
+  };
 
   return (
     <div className="App">
