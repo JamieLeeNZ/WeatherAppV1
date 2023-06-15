@@ -27,31 +27,36 @@ function DisplayDetails({ forecastData, showMoreData, setShowMoreData }) {
   }
 
   const { forecast } = forecastData;
-  const { day, astro } = forecast.forecastday[0];
+  const { hour, day, astro } = forecast.forecastday[0];
 
   const additionalData = [
-    `Total precipitation: ${day.totalprecip_mm} mm`,
-    `Average humidity: ${day.avghumidity}%`,
-    `UV Index: ${day.uv}`,
-    `Sunrise: ${astro.sunrise}`,
-    `Sunset: ${astro.sunset}`,
+    { name: 'Chance of rain:', value: `${day.daily_chance_of_rain}%` },
+    { name: 'Total precipitation:', value: `${day.totalprecip_mm} mm` },
+    { name: 'Max wind speed:', value: `${day.maxwind_kph} kph` },
+    { name: 'Average humidity:', value: `${day.avghumidity}%` },
+    { name: 'UV Index:', value: `${day.uv}` },
+    { name: 'Sunrise:', value: `${astro.sunrise}` },
+    { name: 'Sunset:', value: `${astro.sunset}` },
+    { name: 'Moon phase:', value: `${astro.moon_phase}` },
   ];
 
   const renderedData = additionalData.map((data, index) => (
-    <p
+    <div
       key={index}
+      className="grid grid-cols-2 items-center mb-2"
       style={{
         transition: 'opacity 0.5s',
         opacity: visibleDataIndex >= index ? 1 : 0,
         transitionDelay: showMoreData ? `${index * 0.05}s` : '0s',
       }}
     >
-      {data}
-    </p>
+      <p className="font-bold mr-2 text-left">{data.name}</p>
+      <p className="text-right">{data.value}</p>
+    </div>
   ));
 
   return (
-    <div className="mt-5 p-4 w-70 rounded-mdr text-left font-serif font-family-Times">
+    <div className="p-4 w-70 rounded-mdr text-left font-serif font-family-Times">
       {!showMoreData && (
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-md mb-5"
@@ -61,7 +66,11 @@ function DisplayDetails({ forecastData, showMoreData, setShowMoreData }) {
         </button>
       )}
 
-      {showMoreData && <div className="additional-data">{renderedData}</div>}
+      {showMoreData && <div className="additional-data text-sm">
+        <h2 className="mb-10 text-lg font-semibold italic text-center">
+          ~
+        </h2>
+        {renderedData}</div>}
     </div>
   );
 }
