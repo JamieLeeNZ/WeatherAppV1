@@ -4,6 +4,7 @@ const FetchData = ({
   location,
   setWeatherData,
   setTimeData,
+  setForecastData,
   setError,
   setIsLoading,
   setIsDataFetched,
@@ -35,6 +36,18 @@ const FetchData = ({
 
         const timeData = await timeResponse.json();
         setTimeData(timeData);
+
+        const forecastResponse = await fetch(
+          `${import.meta.env.VITE_APP_API_URL}/forecast.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}&days=3`
+        );
+
+        if (!forecastResponse.ok) {
+          throw new Error('Failed to fetch forecast data');
+        }
+        
+        const forecastData = await forecastResponse.json();
+        setForecastData(forecastData);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -44,7 +57,7 @@ const FetchData = ({
     };
 
     fetchData();
-  }, [location, setWeatherData, setTimeData, setError, setIsLoading, setIsDataFetched]);
+  }, [location, setWeatherData, setTimeData, setForecastData, setError, setIsLoading, setIsDataFetched]);
 
   return null;
 };

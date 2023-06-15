@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import FetchData from './utils/FetchData';
 import GetInput from './utils/GetInput';
 import DisplayWeather from './components/DisplayWeather';
+import DisplayForecast from './components/DisplayForecast';
 
 
 function App() {
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [timeData, setTimeData] = useState(null);
+  const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -36,6 +38,7 @@ function App() {
           location={location}
           setWeatherData={setWeatherData}
           setTimeData={setTimeData}
+          setForecastData={setForecastData}
           setError={setError}
           setIsLoading={setIsLoading}
           setIsDataFetched={setIsDataFetched}
@@ -44,6 +47,7 @@ function App() {
       {isLoading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       <DisplayWeather weatherData={weatherData} timeData={timeData} />
+      <DisplayForecast forecastData={forecastData} />
     </div>
   );
 }
