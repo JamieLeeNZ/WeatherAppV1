@@ -4,6 +4,7 @@ import FetchData from './utils/FetchData';
 import GetInput from './utils/GetInput';
 import DisplayWeather from './components/DisplayWeather';
 import DisplayForecast from './components/DisplayForecast';
+import DisplayDetails from './components/DisplayDetails';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
+  const [showMoreData, setShowMoreData] = useState(false);
 
   const handleInputChange = (event) => {
     setLocation(event.target.value);
@@ -22,6 +24,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsDataFetched(true);
+    setShowMoreData(false);
   };
 
 
@@ -48,6 +51,7 @@ function App() {
       {error && <div>Error: {error}</div>}
       <DisplayWeather weatherData={weatherData} timeData={timeData} />
       <DisplayForecast forecastData={forecastData} />
+      <DisplayDetails forecastData={forecastData} showMoreData={showMoreData} setShowMoreData={setShowMoreData} />
     </div>
   );
 }

@@ -22,22 +22,22 @@ function DisplayForecast({ forecastData }) {
   }
 
   return (
-    <div className="mt-5 p-4 w-65 rounded-mdr text-center font-serif font-family-Times=">
+    <div className="mt-5 p-4 w-70 rounded-mdr text-center font-serif font-family-Times=">
       <h2 className="mb-5 text-lg font-semibold italic">
         7-day forecast
       </h2>
       <div className="grid text-xs">
         {forecast.forecastday.map((day) => (
           <div key={day.date}>
-            <p className="grid grid-cols-3 items-center px2">
-              <p>{displayDate(day.date)}</p>
+            <div className="grid grid-cols-3 items-center px2">
+              <p>{displayDate(day.date)}&emsp;&emsp;&emsp;</p>
               <img
                 src={day.day.condition.icon}
                 alt="Weather Icon"
-                className="w-8 h-8 mx-8 block"
+                className="w-8 h-8 mx-4 block"
               />
-              <p className="pr-7">L: {Math.round(day.day.mintemp_c)}°C • H: {Math.round(day.day.maxtemp_c)}°C</p>
-            </p>
+              <p>L: {Math.round(day.day.mintemp_c)}°C • H: {Math.round(day.day.maxtemp_c)}°C</p>
+            </div>
           </div>
         ))}
       </div>

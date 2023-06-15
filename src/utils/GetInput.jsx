@@ -1,4 +1,6 @@
 import React from 'react';
+import { useState } from 'react';
+import DisplayDetails from '../components/DisplayDetails';
 
 function GetInput({ location, handleInputChange, handleSubmit }) {
   return (
