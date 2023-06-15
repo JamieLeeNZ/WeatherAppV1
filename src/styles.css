@@ -19,3 +19,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+input:focus {
+  outline: 2px solid rgb(120, 189, 236);
+  outline-offset: -2px;
+}
+

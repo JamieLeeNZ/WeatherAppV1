@@ -1,6 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
-import DisplayDetails from '../components/DisplayDetails';
 
 function GetInput({ location, handleInputChange, handleSubmit }) {
   return (
@@ -10,7 +8,7 @@ function GetInput({ location, handleInputChange, handleSubmit }) {
         placeholder="Enter location"
         value={location}
         onChange={handleInputChange}
-        className="w-40 md:w-60 bg-slate-700 text-white px-4 py-2 rounded-l-md hover:border-slate-400"
+        className="w-40 md:w-60 bg-slate-700 text-white px-4 py-2 rounded-l-md"
       />
       <button
         type="submit"
