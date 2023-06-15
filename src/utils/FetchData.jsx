@@ -38,7 +38,7 @@ const FetchData = ({
         setTimeData(timeData);
 
         const forecastResponse = await fetch(
-          `${import.meta.env.VITE_APP_API_URL}/forecast.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}&days=3`
+          `${import.meta.env.VITE_APP_API_URL}/forecast.json?key=${import.meta.env.VITE_APP_API_KEY}&q=${location}&days=7`
         );
 
         if (!forecastResponse.ok) {
