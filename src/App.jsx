@@ -5,6 +5,7 @@ import GetInput from './utils/GetInput';
 import DisplayWeather from './components/DisplayWeather';
 import DisplayForecast from './components/DisplayForecast';
 import DisplayDetails from './components/DisplayDetails';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -53,6 +54,9 @@ function App() {
       <DisplayWeather weatherData={weatherData} timeData={timeData} />
       <DisplayForecast forecastData={forecastData} />
       <DisplayDetails forecastData={forecastData} showMoreData={showMoreData} setShowMoreData={setShowMoreData} />
+    </div>
+    <div className="flex-shrink-0">
+      <Footer />
     </div>
     </div>
     
