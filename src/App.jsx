@@ -29,7 +29,8 @@ function App() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen py-20">
+    <div className="overflow-y-auto h-screen">
+      <div className="flex flex-col items-center justify-center py-20">
       <h1 className="text-5xl mb-5 font-serif font-family-Georgia">Weather App</h1>
       <GetInput
         location={location}
@@ -53,6 +54,8 @@ function App() {
       <DisplayForecast forecastData={forecastData} />
       <DisplayDetails forecastData={forecastData} showMoreData={showMoreData} setShowMoreData={setShowMoreData} />
     </div>
+    </div>
+    
   );
 }
 
