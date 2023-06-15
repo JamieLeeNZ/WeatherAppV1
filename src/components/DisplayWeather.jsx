@@ -26,20 +26,21 @@ function DisplayWeather({ weatherData, timeData }) {
 
   const getFormattedTime = (date) => {
     let hours;
-
+  
     if (apiTime && !isNaN(apiTime)) {
-      hours = moment(apiTime).format('HH');
+      hours = moment(apiTime).format('hh');
     } else if (timeData && timeData.location && timeData.location.localtime) {
       const localTime = moment(timeData.location.localtime, 'YYYY-MM-DD HH:mm').toDate();
-      hours = moment(localTime).format('HH');
+      hours = moment(localTime).format('hh');
     } else {
-      hours = moment(date).format('HH');
+      hours = moment(date).format('hh');
     }
-
+  
     const minutes = moment(date).format('mm');
     const seconds = moment(date).format('ss');
-
-    return `${hours}:${minutes}:${seconds}`;
+    const ampm = moment(date).format('A');
+  
+    return `${hours}:${minutes}:${seconds} ${ampm}`;
   };
 
   if (!weatherData || !timeData) {
