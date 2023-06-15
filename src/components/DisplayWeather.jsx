@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 
 function DisplayWeather({ weatherData, timeData }) {
   const [apiTime, setApiTime] = useState(null);
   const [localTime, setLocalTime] = useState(new Date());
 
   useEffect(() => {
-    if (!timeData) {
+    if (!timeData || !timeData.location || !timeData.location.localtime) {
       return;
     }
 
@@ -24,9 +25,19 @@ function DisplayWeather({ weatherData, timeData }) {
   }, []);
 
   const getFormattedTime = (date) => {
-    const hours = apiTime ? apiTime.getHours() : timeData.location.localtime.split(' ')[1].slice(0, 5);
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
+    let hours;
+
+    if (apiTime && !isNaN(apiTime)) {
+      hours = moment(apiTime).format('HH');
+    } else if (timeData && timeData.location && timeData.location.localtime) {
+      const localTime = moment(timeData.location.localtime, 'YYYY-MM-DD HH:mm').toDate();
+      hours = moment(localTime).format('HH');
+    } else {
+      hours = moment(date).format('HH');
+    }
+
+    const minutes = moment(date).format('mm');
+    const seconds = moment(date).format('ss');
 
     return `${hours}:${minutes}:${seconds}`;
   };
